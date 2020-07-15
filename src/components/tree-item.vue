@@ -66,8 +66,8 @@ export default {
 <style scoped>
   .add {
     display: inline-block;
-    width: 60px;
     height: 60px;
+    padding: 8px 6px;
     background: darkseagreen;
   }
   .itemname {

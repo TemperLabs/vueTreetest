@@ -39,9 +39,6 @@ export default {
     isFolder: function () {
       return this.item.children && this.item.children.length
     },
-    isSelected: function () {
-      return this.item.selected
-    },
     itemName: function () {
       return this.item.name
     }
@@ -64,7 +61,6 @@ export default {
 <style scoped>
   .add {
     display: block;
-    width: 120px;
     height: 80px;
     background: darkseagreen;
   }

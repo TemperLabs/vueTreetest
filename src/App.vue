@@ -10,7 +10,6 @@
     :item="treeState"
     @make-folder="makeFolder"
   ></checkbox-item>
-    {{this.treeState.children}}
   </div>
 </template>
 
@@ -86,11 +85,6 @@ export default {
       searchName: ''
     }
   },
-  computed: {
-    treeStateComputed: function () {
-      return this.treeState
-    }
-  },
   methods: {
     makeFolder: function (item) {
       const vm = this
@@ -102,7 +96,6 @@ export default {
       const findItem = function (array) {
         return array.find(item => {
           if (item.name === name) {
-            console.log('this name', item.name)
             item.selected = false
             return true
           } else if (item.children && item.children.length) {
@@ -113,13 +106,9 @@ export default {
       findItem(this.treeState.children)
     })
     eventBus.$on('toggleCheckbox', (name, checked) => {
-      console.log(`${name}-имя`)
-      console.log(`${checked}-изактикв`)
-      console.log('евентбас!')
       const findItemCheckbox = function (array) {
         return array.find(item => {
           if (item.name === name) {
-            console.log('this name', item, 'this.selected', checked)
             item.selected = checked
             return true
           } else if (item.children && item.children.length) {
@@ -151,6 +140,9 @@ export default {
     justify-content: space-between;
   }
   .checkbox-item {
+    flex: 1 0 50%;
+  }
+  .item {
     flex: 1 0 50%;
   }
 </style>
