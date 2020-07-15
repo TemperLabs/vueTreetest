@@ -1,35 +1,38 @@
 <template>
-  <li>
+  <li class="checkbox-item">
     <div
       :class="{bold: isFolder}"
-      class="tree-item"
       @dblclick="makeFolder"
-      v-if="isSelected"
-      >
-      <span class="itemname">{{itemName}}</span>
-      <button class="add" @click="toggleOff">DELETE:{{itemName}}</button>
+    >
+      <input
+        type="checkbox"
+        id="checkbox"
+        :value="item.selected"
+        @change="toggleCheckbox">
+      <label for="checkbox" class="checkbox-label">{{ itemName }}: {{isActive}}</label>
     </div>
-    <ul v-show="isOpen" v-if="isFolder">
-      <tree-item
+    <ul v-if="isFolder">
+      <checkbox-item
         class="item"
         v-for="child in item.children"
         :key="child.name"
         :item="child"
         @make-folder="$emit('make-folder', $event)"
-      ></tree-item>
+      ></checkbox-item>
     </ul>
   </li>
 </template>
 <script>
 import { eventBus } from './../main.js'
 export default {
-  name: 'TreeItem',
+  name: 'CheckboxItem',
   props: {
     item: Object
   },
   data: function () {
     return {
-      isOpen: true
+      isOpen: true,
+      isActive: this.item.selected
     }
   },
   computed: {
@@ -44,19 +47,17 @@ export default {
     }
   },
   methods: {
-    toggle: function () {
-      if (this.isSelected) {
-        this.isOpen = !this.isOpen
-      }
-    },
     makeFolder: function () {
       if (!this.isFolder) {
         this.$emit('make-folder', this.item)
         this.isOpen = true
       }
     },
-    toggleOff: function () {
-      eventBus.$emit('toggleOff', this.item.name)
+    toggleCheckbox: function (event) {
+      console.log(this.itemName)
+      this.isActive = event.target.checked
+      console.log(event.target.checked)
+      eventBus.$emit('toggleCheckbox', this.itemName, event.target.checked)
     }
   }
 }
@@ -65,20 +66,18 @@ export default {
 
 <style scoped>
   .add {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
+    display: block;
+    width: 120px;
+    height: 80px;
     background: darkseagreen;
   }
-  .itemname {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    background: dodgerblue;
+  .checkbox-label {
+    padding: 14px 10px;
+    background: lightgray;
+    font-size: 18px;
   }
-  .tree-item {
-    display: flex;
-    margin: 0 20px;
-    padding: 12px 8px;
+
+  .checkbox-item {
+    margin: 40px auto;
   }
 </style>
