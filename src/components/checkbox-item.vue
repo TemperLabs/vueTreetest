@@ -8,8 +8,9 @@
         type="checkbox"
         id="checkbox"
         :value="item.selected"
+        :checked="item.selected"
         @change="toggleCheckbox">
-      <label for="checkbox" class="checkbox-label">{{ itemName }}: {{isActive}}</label>
+      <label for="checkbox" class="checkbox-label">{{ itemName }}: {{item.selected}}</label>
     </div>
     <ul v-if="isFolder">
       <checkbox-item
@@ -31,8 +32,7 @@ export default {
   },
   data: function () {
     return {
-      isOpen: true,
-      isActive: this.item.selected
+      isOpen: true
     }
   },
   computed: {
@@ -54,9 +54,6 @@ export default {
       }
     },
     toggleCheckbox: function (event) {
-      console.log(this.itemName)
-      this.isActive = event.target.checked
-      console.log(event.target.checked)
       eventBus.$emit('toggleCheckbox', this.itemName, event.target.checked)
     }
   }

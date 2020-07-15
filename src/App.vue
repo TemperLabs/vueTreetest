@@ -5,11 +5,11 @@
     :item="treeState"
     @make-folder="makeFolder"
   ></tree-item>
-    <checkbox-item
-      class="checkbox-item"
-      :item="treeState"
-      @make-folder="makeFolder"
-    ></checkbox-item>
+  <checkbox-item
+    class="checkbox-item"
+    :item="treeState"
+    @make-folder="makeFolder"
+  ></checkbox-item>
     {{this.treeState.children}}
   </div>
 </template>
@@ -84,6 +84,11 @@ export default {
     return {
       treeState: treeData,
       searchName: ''
+    }
+  },
+  computed: {
+    treeStateComputed: function () {
+      return this.treeState
     }
   },
   methods: {
